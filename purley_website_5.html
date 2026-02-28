@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purley — Freeze-Dried Cat Food. Outrageously Good.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lime:#C8E832;--limedim:#8FA520;--coral:#F04E3B;--ink:#0D1B2A;--inklt:#122030;
+  --cream:#FBF4E6;--warm:#F5EDD8;--pink:#FF5C8A;--lav:#BBA8FF;--sky:#7FD4F5;
+  --orange:#FF8C38;--mid:#555;--ease:cubic-bezier(.22,.61,.36,1)
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:#0D1B2A;color:var(--cream);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+a{cursor:none}
+button{cursor:none;font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0D1B2A}
+::-webkit-scrollbar-thumb{background:var(--lime);border-radius:4px}
+
+/* ── CURSOR ── */
+#cursor{position:fixed;width:14px;height:14px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s var(--ease),height .2s var(--ease),background .2s;mix-blend-mode:difference;top:-40px;left:-40px}
+#cursor.hover{width:44px;height:44px}
+#cursor.press{width:8px;height:8px;background:var(--coral)}
+
+/* ══════════════════════════════════════════
+   INTRO ANIMATION SCREEN
+══════════════════════════════════════════ */
+#intro{
+  position:fixed;inset:0;z-index:9000;
+  background:linear-gradient(135deg,#0D0B2A 0%,#1A082E 25%,#0A1A38 50%,#1A082E 75%,#0D0B2A 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#intro::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(200,232,50,.08) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+/* orb behind cat */
+.intro-orb{
+  position:absolute;
+  width:600px;height:600px;
+  background:conic-gradient(from 0deg,#C8E832,#FF5C8A,#7C5FFF,#7FD4F5,#FF8C38,#C8E832);
+  border-radius:50%;
+  opacity:.14;
+  filter:blur(40px);
+  animation:iorb 4s linear infinite;
+}
+.intro-orb2{
+  position:absolute;
+  width:360px;height:360px;
+  background:radial-gradient(circle at 40% 40%,#C8E832 0%,#FF5C8A 40%,transparent 70%);
+  border-radius:50%;
+  opacity:.18;
+  animation:iorb2 3s ease-in-out infinite;
+}
+@keyframes iorb{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes iorb2{0%,100%{transform:scale(1) translate(-30px,-20px)}50%{transform:scale(1.08) translate(30px,20px)}}
+
+.intro-logo{
+  position:absolute;top:44px;left:50%;transform:translateX(-50%);
+  font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:var(--lime);
+  letter-spacing:.12em;opacity:0;
+  text-shadow:0 0 40px rgba(200,232,50,.5);
+  animation:ilogoIn .7s .2s var(--ease) forwards;
+}
+@keyframes ilogoIn{to{opacity:1}}
+
+/* cat scene wrapper */
+.intro-scene{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+.intro-cat{display:block}
+
+/* bowl that slides in from bottom */
+.intro-bowl{
+  position:absolute;bottom:-12px;left:50%;transform:translateX(-50%) scale(0);
+  transform-origin:center bottom;
+  animation:bowlPop .65s .4s var(--ease) forwards;
+}
+@keyframes bowlPop{to{transform:translateX(-50%) scale(1)}}
+
+/* food pellets flying into bowl */
+.food-p{
+  position:absolute;
+  border-radius:50%;
+  opacity:0;
+}
+.food-p:nth-child(1){width:14px;height:14px;background:#C8E832;box-shadow:0 0 12px #C8E832;animation:fp1 .5s 1.0s ease-in forwards}
+.food-p:nth-child(2){width:18px;height:18px;background:#FF5C8A;box-shadow:0 0 14px #FF5C8A;animation:fp2 .5s 1.15s ease-in forwards}
+.food-p:nth-child(3){width:12px;height:12px;background:#7FD4F5;box-shadow:0 0 10px #7FD4F5;animation:fp3 .5s 1.3s ease-in forwards}
+.food-p:nth-child(4){width:16px;height:16px;background:#FF8C38;box-shadow:0 0 12px #FF8C38;animation:fp4 .5s 1.1s ease-in forwards}
+.food-p:nth-child(5){width:10px;height:10px;background:#BBA8FF;box-shadow:0 0 10px #BBA8FF;animation:fp5 .5s 1.45s ease-in forwards}
+.food-p:nth-child(6){width:15px;height:15px;background:#C8E832;box-shadow:0 0 12px #C8E832;animation:fp6 .5s 1.25s ease-in forwards}
+.food-p:nth-child(7){width:11px;height:11px;background:#F04E3B;box-shadow:0 0 10px #F04E3B;animation:fp7 .5s 1.55s ease-in forwards}
+@keyframes fp1{0%{opacity:1;top:-100px;left:55px;transform:scale(.8) rotate(0)}100%{opacity:0;top:35px;left:75px;transform:scale(.4) rotate(180deg)}}
+@keyframes fp2{0%{opacity:1;top:-110px;left:105px;transform:scale(.9) rotate(0)}100%{opacity:0;top:33px;left:118px;transform:scale(.5) rotate(-120deg)}}
+@keyframes fp3{0%{opacity:1;top:-90px;left:155px;transform:scale(.7) rotate(0)}100%{opacity:0;top:30px;left:142px;transform:scale(.35) rotate(90deg)}}
+@keyframes fp4{0%{opacity:1;top:-105px;left:35px;transform:scale(1) rotate(0)}100%{opacity:0;top:36px;left:68px;transform:scale(.4) rotate(200deg)}}
+@keyframes fp5{0%{opacity:1;top:-95px;left:175px;transform:scale(.8) rotate(0)}100%{opacity:0;top:32px;left:158px;transform:scale(.35) rotate(-90deg)}}
+@keyframes fp6{0%{opacity:1;top:-115px;left:80px;transform:scale(.9) rotate(0)}100%{opacity:0;top:34px;left:95px;transform:scale(.45) rotate(150deg)}}
+@keyframes fp7{0%{opacity:1;top:-100px;left:135px;transform:scale(.7) rotate(0)}100%{opacity:0;top:31px;left:128px;transform:scale(.38) rotate(-60deg)}}
+
+/* sparkle bursts when cat reacts happily */
+.i-spark{
+  position:absolute;pointer-events:none;opacity:0;
+  filter:drop-shadow(0 0 8px currentColor);
+}
+.i-spark:nth-child(1){top:10px;left:10px;animation:ispk .7s 2.0s var(--ease) both}
+.i-spark:nth-child(2){top:5px;right:8px;animation:ispk .7s 2.15s var(--ease) both}
+.i-spark:nth-child(3){bottom:30px;left:-30px;animation:ispk .7s 2.3s var(--ease) both}
+.i-spark:nth-child(4){bottom:50px;right:-18px;animation:ispk .7s 2.2s var(--ease) both}
+.i-spark:nth-child(5){top:50%;left:-40px;animation:ispk .7s 2.45s var(--ease) both}
+.i-spark:nth-child(6){top:40%;right:-35px;animation:ispk .7s 2.35s var(--ease) both}
+@keyframes ispk{0%{opacity:0;transform:scale(0) rotate(-10deg)}40%{opacity:1;transform:scale(1.4) rotate(15deg)}100%{opacity:0;transform:scale(1) rotate(45deg)}}
+
+/* happy hearts floating */
+.i-heart{
+  position:absolute;font-size:2rem;opacity:0;
+  animation:iheart 1.4s ease forwards;
+  filter:drop-shadow(0 0 6px rgba(255,255,255,.4));
+}
+.i-heart:nth-child(1){left:-20px;bottom:60px;animation-delay:2.0s}
+.i-heart:nth-child(2){right:-15px;bottom:80px;animation-delay:2.2s}
+.i-heart:nth-child(3){left:40%;bottom:60px;animation-delay:2.4s}
+.i-heart:nth-child(4){left:20%;bottom:80px;animation-delay:2.6s}
+@keyframes iheart{0%{opacity:0;transform:translateY(0) scale(.4) rotate(-10deg)}40%{opacity:1;transform:translateY(-40px) scale(1.1) rotate(5deg)}100%{opacity:0;transform:translateY(-100px) scale(.6) rotate(15deg)}}
+
+/* "PURLEY." text reveal at end */
+.intro-tagline{
+  margin-top:28px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.6rem;
+  letter-spacing:.18em;
+  color:var(--lime);
+  text-shadow:0 0 40px rgba(200,232,50,.6),0 0 80px rgba(200,232,50,.25);
+  opacity:0;
+  position:relative;z-index:2;
+  animation:itagIn .8s 3.5s var(--ease) forwards;
+}
+@keyframes itagIn{to{opacity:1}}
+
+/* sub tagline */
+.intro-sub{
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#7fa8c8;
+  margin-top:8px;
+  opacity:0;
+  position:relative;z-index:2;
+  animation:itagIn .6s 4.2s var(--ease) forwards;
+}
+
+/* cat bounce reaction when food arrives */
+.intro-cat{animation:icatFloat 2.5s ease-in-out infinite, icatEat 0s 2.0s forwards}
+@keyframes icatFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+@keyframes icatEat{to{animation-name:icatHappy}}
+@keyframes icatHappy{
+  0%{transform:translateY(0) rotate(0) scale(1)}
+  20%{transform:translateY(-18px) rotate(-3deg) scale(1.06)}
+  40%{transform:translateY(-6px) rotate(3deg) scale(1.04)}
+  60%{transform:translateY(-14px) rotate(-2deg) scale(1.05)}
+  80%{transform:translateY(-4px) rotate(2deg) scale(1.03)}
+  100%{transform:translateY(-8px) rotate(0) scale(1.04)}
+}
+
+/* intro exit */
+#intro.exit{animation:introExit 1.4s 7.5s var(--ease) forwards}
+@keyframes introExit{
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.04);pointer-events:none}
+}
+#intro.gone{display:none}
+
+/* ── ANNOUNCE ── */
+.ann-bar{background:var(--lime);text-align:center;padding:8px 20px;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);position:relative;z-index:700}
+.ann-bar a{color:var(--ink);text-decoration:underline}
+
+/* ── NAV ── */
+nav{position:fixed;top:30px;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:64px}
+nav::before{content:'';position:absolute;inset:0;background:rgba(13,27,42,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);z-index:-1}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--lime);letter-spacing:.05em;line-height:1}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{color:rgba(251,244,230,.5);text-decoration:none;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--lime)}
+.nav-cta{background:var(--lime)!important;color:var(--ink)!important;padding:10px 24px;border-radius:100px;transition:background .2s,transform .15s!important}
+.nav-cta:hover{background:var(--coral)!important;color:var(--cream)!important;transform:scale(1.04) rotate(-1deg)!important}
+
+/* ── TICKER ── */
+.ticker{overflow:hidden;white-space:nowrap;position:relative;z-index:10}
+.ticker.lime{background:var(--lime);padding:10px 0}
+.ticker.dark{background:#122030;border-top:1px solid #1a3448;border-bottom:1px solid #1a3448;padding:10px 0}
+.ticker-inner{display:inline-block}
+.ticker.lime .ticker-inner{animation:tick 20s linear infinite}
+.ticker.dark .ticker-inner{animation:tick 26s linear infinite}
+.ticker-item{display:inline-block;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;padding:0 18px}
+.ticker.lime .ticker-item{color:var(--ink)}
+.ticker.dark .ticker-item{color:#2a4a6a}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;border-radius:100px;border:none;text-decoration:none;transition:background .2s,color .2s,transform .15s var(--ease)}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-lime:hover{background:var(--coral);color:var(--cream);transform:scale(1.04) rotate(-1.2deg)}
+.btn-ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(251,244,230,.25)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime);transform:scale(1.03)}
+.section-label{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:5px 13px;border-radius:4px;margin-bottom:16px}
+.sl-lime{background:var(--lime);color:var(--ink)}
+.sl-dark{background:rgba(200,232,50,.12);color:var(--lime);border:1px solid rgba(200,232,50,.25)}
+.sl-cream{background:var(--warm);color:var(--ink)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;padding-top:94px}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,232,50,.04) 1px,transparent 1px);background-size:28px 28px;z-index:0}
+.hero-orb{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:620px;height:620px;background:radial-gradient(circle at 40% 40%,var(--lime) 0%,#7B9300 65%,transparent 100%);border-radius:50%;z-index:1;animation:orb 5s ease-in-out infinite}
+@keyframes orb{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-52%) scale(1.03)}}
+.hero-orb2{position:absolute;left:-120px;bottom:-60px;width:340px;height:340px;background:radial-gradient(circle,var(--coral) 0%,transparent 70%);border-radius:50%;z-index:0;opacity:.18;animation:orb 7s ease-in-out infinite reverse}
+.hero-left{position:relative;z-index:10;padding:60px 0 60px 60px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--coral);color:var(--ink);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 15px;border-radius:100px;margin-bottom:24px;animation:sup .5s var(--ease) both}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5.5rem,9.5vw,9rem);line-height:.88;color:var(--cream);animation:sup .5s .07s var(--ease) both}
+.hero-h1 .c-lime{color:var(--lime)}
+.hero-h1 .c-coral{color:var(--coral)}
+.hero-tagline{font-size:1rem;color:rgba(251,244,230,.6);line-height:1.72;max-width:380px;margin:22px 0 36px;animation:sup .5s .14s var(--ease) both}
+.hero-tagline strong{color:var(--cream)}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;animation:sup .5s .21s var(--ease) both}
+.hero-stats{display:flex;gap:36px;margin-top:44px;animation:sup .5s .28s var(--ease) both}
+.hstat-num{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--lime);line-height:1}
+.hstat-label{font-size:.88rem;color:var(--cream);opacity:.7;margin-top:4px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.hero-right{position:relative;z-index:5;display:flex;align-items:center;justify-content:center;padding:60px 40px 60px 0}
+@keyframes sup{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.ghibli-cat{animation:drift 4s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:rotate(-1.5deg) translateY(0px)}50%{transform:rotate(1.5deg) translateY(-20px)}}
+
+/* ── MANIFESTO ── */
+.manifesto{background:var(--coral);padding:100px 60px;position:relative;overflow:hidden}
+.manifesto::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,.06) 1.5px,transparent 1.5px);background-size:22px 22px}
+.manifesto-inner{position:relative;z-index:2;max-width:900px}
+.manifesto h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,7rem);line-height:.9;color:var(--ink);margin-bottom:28px}
+.manifesto h2 .stroke{-webkit-text-stroke:2.5px var(--ink);color:transparent}
+.manifesto p{font-size:1.15rem;line-height:1.8;color:var(--ink);max-width:680px;font-weight:300}
+.manifesto p strong{font-weight:700}
+.mstar{position:absolute;right:80px;top:60px;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══════════════════════════════════════════
+   FLAVOR CARDS — colorful, vibrant redesign
+══════════════════════════════════════════ */
+.products{background:var(--cream);color:var(--ink);padding:110px 60px}
+.products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px}
+.products-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5.2rem);line-height:.95;color:var(--ink)}
+.products-header h2 em{color:var(--coral);font-style:normal}
+.products-note{max-width:280px;text-align:right;font-size:.82rem;color:#888;line-height:1.65}
+.products-note strong{color:var(--ink)}
+
+.flavor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:stretch}
+
+/* ── single card ── */
+.fcard{
+  border-radius:24px;
+  position:relative;overflow:hidden;cursor:none;
+  display:flex;flex-direction:column;
+  min-height:500px;
+  transition:transform .3s var(--ease),box-shadow .3s;
+  /* no dark background anymore — each card gets its own via inline style */
+}
+.fcard:hover{transform:translateY(-12px) rotate(-.4deg);box-shadow:0 36px 72px -8px rgba(0,0,0,.22)}
+
+/* top accent stripe, thicker */
+.fcard-band{height:8px;flex-shrink:0;border-radius:24px 24px 0 0}
+
+/* large color splash behind the emoji — decorative circle */
+.fcard-splash{
+  position:absolute;
+  top:-30px;right:-30px;
+  width:180px;height:180px;
+  border-radius:50%;
+  opacity:.18;
+  pointer-events:none;
+}
+
+/* body */
+.fcard-body{flex:1;padding:26px 24px 0;display:flex;flex-direction:column;position:relative;z-index:2}
+
+/* emoji bigger, wrapped in a soft pill */
+.fcard-emoji-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:62px;height:62px;
+  border-radius:16px;
+  margin-bottom:18px;
+  font-size:2.2rem;
+  flex-shrink:0;
+}
+
+.fcard-name{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;line-height:1;margin-bottom:6px}
+.fcard-subtitle{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;opacity:.55}
+.fcard-desc{font-size:.8rem;line-height:1.65;flex:1;min-height:0;opacity:.75}
+
+/* protein badge */
+.fcard-prot{
+  display:inline-flex;align-items:baseline;gap:3px;
+  margin-top:16px;
+  padding:5px 14px;
+  border-radius:100px;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+}
+.fcard-prot .pn{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1}
+
+/* footer pinned */
+.fcard-footer{padding:14px 24px 24px;position:relative;z-index:2}
+.fcard-cta{
+  display:block;text-align:center;
+  font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:12px;border-radius:100px;
+  text-decoration:none;
+  transition:background .22s,color .22s,transform .18s var(--ease),box-shadow .2s;
+}
+
+/* ── per-card color themes ── */
+/* card 1: Chicken — warm golden */
+.fc-chicken{background:linear-gradient(145deg,#FFF8E7 0%,#FDEEBB 100%)}
+.fc-chicken .fcard-name{color:#4A3500}
+.fc-chicken .fcard-subtitle{color:#7A5C00}
+.fc-chicken .fcard-desc{color:#5A4400}
+.fc-chicken .fcard-splash{background:#F5C400}
+.fc-chicken .fcard-emoji-wrap{background:rgba(245,196,0,.18)}
+.fc-chicken .fcard-prot{background:rgba(245,196,0,.22);color:#6A4E00}
+.fc-chicken .fcard-cta{background:#4A3500;color:#F5C400}
+.fc-chicken .fcard-cta:hover{background:#F5C400;color:#3A2800;transform:scale(1.03);box-shadow:0 6px 24px rgba(245,196,0,.4)}
+.fc-chicken .fcard-band{background:#F5C400}
+
+/* card 2: Salmon — warm coral-pink */
+.fc-salmon{background:linear-gradient(145deg,#FFF0EC 0%,#FFDBD4 100%)}
+.fc-salmon .fcard-name{color:#4A1000}
+.fc-salmon .fcard-subtitle{color:#8A2A10}
+.fc-salmon .fcard-desc{color:#5A2010}
+.fc-salmon .fcard-splash{background:#FF6B47}
+.fc-salmon .fcard-emoji-wrap{background:rgba(255,107,71,.15)}
+.fc-salmon .fcard-prot{background:rgba(255,107,71,.18);color:#7A2010}
+.fc-salmon .fcard-cta{background:#4A1000;color:#FF7C5A}
+.fc-salmon .fcard-cta:hover{background:#FF6B47;color:#fff;transform:scale(1.03);box-shadow:0 6px 24px rgba(255,107,71,.4)}
+.fc-salmon .fcard-band{background:#FF6B47}
+
+/* card 3: Rabbit — cool lavender */
+.fc-rabbit{background:linear-gradient(145deg,#F5F2FF 0%,#E8E0FF 100%)}
+.fc-rabbit .fcard-name{color:#1E0860}
+.fc-rabbit .fcard-subtitle{color:#4A2A9A}
+.fc-rabbit .fcard-desc{color:#2E1270}
+.fc-rabbit .fcard-splash{background:#7C5FFF}
+.fc-rabbit .fcard-emoji-wrap{background:rgba(124,95,255,.14)}
+.fc-rabbit .fcard-prot{background:rgba(124,95,255,.16);color:#2E1A6A}
+.fc-rabbit .fcard-cta{background:#1E0860;color:#9B84FF}
+.fc-rabbit .fcard-cta:hover{background:#7C5FFF;color:#fff;transform:scale(1.03);box-shadow:0 6px 24px rgba(124,95,255,.4)}
+.fc-rabbit .fcard-band{background:#7C5FFF}
+
+/* card 4: Beef — deep forest green */
+.fc-beef{background:linear-gradient(145deg,#F0FAF0 0%,#D8F5DC 100%)}
+.fc-beef .fcard-name{color:#0A2E0A}
+.fc-beef .fcard-subtitle{color:#1A6020}
+.fc-beef .fcard-desc{color:#0E3A14}
+.fc-beef .fcard-splash{background:#28A745}
+.fc-beef .fcard-emoji-wrap{background:rgba(40,167,69,.14)}
+.fc-beef .fcard-prot{background:rgba(40,167,69,.16);color:#0A3010}
+.fc-beef .fcard-cta{background:#0A2E0A;color:#5ACA6A}
+.fc-beef .fcard-cta:hover{background:#28A745;color:#fff;transform:scale(1.03);box-shadow:0 6px 24px rgba(40,167,69,.4)}
+.fc-beef .fcard-band{background:#28A745}
+
+/* ── ingredient overlay ── */
+.ing-overlay{
+  position:absolute;inset:0;background:rgba(8,22,38,.97);border-radius:24px;
+  padding:26px;display:flex;flex-direction:column;
+  opacity:0;transform:translateY(10px) scale(.98);
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+  pointer-events:none;z-index:30
+}
+.fcard:hover .ing-overlay{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.iol-flavor{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.iol-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;color:var(--lime);line-height:1;margin-bottom:14px}
+.iol-items{flex:1;overflow:hidden}
+.iol-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.iol-ico{font-size:1.35rem;line-height:1;flex-shrink:0}
+.iol-text strong{display:block;font-size:.78rem;color:var(--cream);font-weight:700}
+.iol-text span{font-size:.69rem;color:#7fa8c8;line-height:1.4}
+.iol-badge{margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:var(--lime);color:var(--ink);font-size:.67rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:6px 13px;border-radius:100px}
+.iol-sub-btn{display:block;text-align:center;margin-top:10px;background:transparent;border:1.5px solid #2a5070;color:#7fa8c8;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:9px;border-radius:100px;text-decoration:none;transition:border-color .2s,color .2s}
+.iol-sub-btn:hover{border-color:var(--lime);color:var(--lime)}
+
+/* ── WHY ── */
+.why{background:#0F2035;padding:110px 60px;position:relative}
+.why::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,232,50,.06) 1.5px,transparent 1.5px);background-size:26px 26px}
+.why-inner{position:relative;z-index:2}
+.why h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.95;color:var(--cream);margin-bottom:64px}
+.why h2 em{color:var(--lime);font-style:normal}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{background:#132840;border:1px solid #1e3a55;border-radius:20px;padding:34px 26px;transition:border-color .2s,transform .2s}
+.why-card:hover{border-color:var(--lime);transform:translateY(-6px)}
+.why-icon{font-size:2.2rem;margin-bottom:16px}
+.why-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--lime);margin-bottom:10px}
+.why-desc{font-size:.82rem;color:#8aadcc;line-height:1.7}
+
+/* ── TRANSPARENCY ── */
+.trans-sec{background:var(--warm);color:var(--ink);padding:110px 60px;overflow:hidden}
+.trans-sec h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.95;margin-bottom:10px}
+.trans-sec>p{font-size:.95rem;color:#888;max-width:480px;line-height:1.7;margin-bottom:56px}
+.pill-wrap{display:flex;flex-wrap:wrap;gap:12px;max-width:900px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:100px;font-weight:700;font-size:.83rem;opacity:0}
+.pill.yes{background:var(--lime);color:var(--ink)}
+.pill.no{background:#132840;color:#5a8aaa;text-decoration:line-through;border:1px solid #1e3a55}
+.pill.yes .ptag{color:var(--limedim);font-size:.76rem}
+.pill.no .ptag{color:var(--coral);font-size:.76rem}
+.pill.in{animation:ppop .45s var(--ease) forwards}
+.pill.yes:hover{transform:scale(1.06) rotate(-2deg);background:var(--coral);color:var(--cream)}
+@keyframes ppop{from{opacity:0;transform:scale(.6) rotate(-5deg)}to{opacity:1;transform:scale(1) rotate(0deg)}}
+
+/* ══════════════════════════════════════════
+   SUBSCRIPTION PRICING
+══════════════════════════════════════════ */
+.pricing{background:#0F2035;padding:110px 60px;position:relative;overflow:hidden}
+.pricing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,232,50,.05) 1.5px,transparent 1.5px);background-size:26px 26px}
+.pricing-inner{position:relative;z-index:2}
+.pricing h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.95;color:var(--cream);margin-bottom:10px}
+.pricing h2 em{color:var(--lime);font-style:normal}
+.pricing-sub{font-size:.95rem;color:#7fa8c8;max-width:460px;line-height:1.7;margin-bottom:64px}
+
+.plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+.plan{
+  border-radius:24px;padding:0;
+  display:flex;flex-direction:column;
+  border:1.5px solid #1e3a55;
+  background:#0D2235;
+  transition:border-color .25s,transform .25s var(--ease),box-shadow .25s;
+  position:relative;overflow:hidden;
+  cursor:none;
+}
+.plan:hover{border-color:var(--lime);transform:translateY(-8px);box-shadow:0 28px 60px -8px rgba(200,232,50,.12)}
+.plan.featured{border-color:var(--lime);background:linear-gradient(160deg,#0D2235 0%,#12300a 100%)}
+.plan.featured::before{
+  content:'MOST POPULAR';
+  position:absolute;top:0;right:0;
+  background:var(--lime);color:var(--ink);
+  font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 14px;
+  border-radius:0 24px 0 14px;
+}
+
+.plan-top{padding:32px 28px 24px}
+.plan-period{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7fa8c8;margin-bottom:12px}
+.plan-price{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:var(--cream);line-height:1;margin-bottom:2px}
+.plan-price .cur{font-size:1.8rem;color:#9abfd8;vertical-align:top;margin-top:8px;display:inline-block}
+.plan-price .per{font-size:1rem;color:#7fa8c8;font-family:'DM Sans',sans-serif;font-weight:400}
+.plan-total{font-size:.8rem;color:#6090b0;margin-bottom:14px}
+.plan-save{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(200,232,50,.12);
+  border:1px solid rgba(200,232,50,.2);
+  color:var(--lime);
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 12px;border-radius:100px;
+}
+.plan.monthly .plan-save{opacity:0;pointer-events:none}
+
+.plan-divider{height:1px;background:#1a3a55;margin:0 28px}
+
+.plan-perks{padding:22px 28px;flex:1;display:flex;flex-direction:column;gap:10px}
+.plan-perk{display:flex;align-items:center;gap:10px;font-size:.81rem;color:#8aadcc}
+.plan-perk::before{content:'✓';color:var(--lime);font-weight:700;flex-shrink:0;font-size:.85rem}
+.plan.featured .plan-perk{color:#c0dded}
+
+.plan-cta-wrap{padding:0 28px 28px}
+.plan-cta{
+  display:block;text-align:center;
+  background:#1a3040;border:1.5px solid #2a5070;
+  color:#7fa8c8;font-weight:700;font-size:.76rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:13px;border-radius:100px;
+  text-decoration:none;
+  transition:background .22s,color .22s,border-color .22s,transform .18s;
+}
+.plan:hover .plan-cta{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.plan.featured .plan-cta{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.plan.featured:hover .plan-cta{background:var(--coral);color:#fff;border-color:var(--coral)}
+
+/* ── PROOF ── */
+.proof{background:var(--lime);padding:90px 60px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;align-items:start}
+.proof-stat h3{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--ink);line-height:1}
+.proof-stat p{font-size:.82rem;color:rgba(12,12,12,.65);margin-top:4px}
+.review-card{background:#0D2235;border-radius:20px;padding:30px;border:1px solid #1e3a55}
+.r-stars{color:var(--lime);font-size:.9rem;letter-spacing:3px;margin-bottom:10px}
+.r-text{font-size:.86rem;color:var(--cream);line-height:1.7;margin-bottom:16px}
+.r-author{font-size:.73rem;color:#7fa8c8;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+
+/* ── HOW ── */
+.how{background:var(--cream);color:var(--ink);padding:110px 60px}
+.how h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.95;margin-bottom:64px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{content:'';position:absolute;top:48px;left:12%;right:12%;height:2px;background:rgba(12,12,12,.15);z-index:0}
+.step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.step-num{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2.2rem;margin:0 auto 22px;border:2.5px solid var(--ink)}
+.step:nth-child(1) .step-num{background:var(--lime)}
+.step:nth-child(2) .step-num{background:var(--coral);color:var(--cream);border-color:var(--coral)}
+.step:nth-child(3) .step-num{background:var(--lav)}
+.step:nth-child(4) .step-num{background:var(--sky)}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;margin-bottom:8px}
+.step-desc{font-size:.81rem;color:#777;line-height:1.7}
+
+/* ── QUIZ ── */
+.quiz-section{background:#0F2035;padding:110px 60px;position:relative;overflow:hidden}
+.quiz-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,232,50,.05) 1.5px,transparent 1.5px);background-size:25px 25px}
+.quiz-section>.section-label,.quiz-section>h2,.quiz-section>p{position:relative;z-index:2}
+.quiz-section h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5.5vw,5rem);line-height:.95;color:var(--cream);margin-bottom:8px}
+.quiz-section>p{font-size:.92rem;color:#7fa8c8;margin-bottom:52px}
+#quiz-box{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.q-progress{display:flex;gap:6px;margin-bottom:28px}
+.q-dot{height:3px;border-radius:3px;flex:1;background:#1e3a55;transition:background .3s}
+.q-dot.done{background:var(--lime)}
+.q-dot.active{background:var(--coral)}
+.q-card{background:#0D2235;border:1px solid #1e3a55;border-radius:22px;padding:48px;display:none}
+.q-card.show{display:block;animation:sup .35s var(--ease)}
+.q-num{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7fa8c8;margin-bottom:10px}
+.q-question{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--cream);margin-bottom:28px;line-height:1.1}
+.q-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.q-opt{background:#0D2235;border:2px solid #1e3a55;border-radius:16px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px;transition:border-color .2s,background .2s,transform .15s}
+.q-opt:hover{border-color:var(--lime);transform:scale(1.02)}
+.q-opt.sel{border-color:var(--lime);background:rgba(200,232,50,.1)}
+.q-opt-icon{font-size:1.9rem;flex-shrink:0;line-height:1;margin-top:2px}
+.q-opt-text strong{display:block;font-size:.86rem;color:var(--cream);font-weight:700;margin-bottom:3px}
+.q-opt-text span{font-size:.75rem;color:#7fa8c8;line-height:1.4}
+.q-next{margin-top:22px;background:var(--lime);color:var(--ink);font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 34px;border-radius:100px;border:none;opacity:.3;pointer-events:none;transition:opacity .2s,background .2s,transform .15s}
+.q-next.ready{opacity:1;pointer-events:all}
+.q-next.ready:hover{background:var(--coral);color:var(--cream);transform:scale(1.04)}
+.q-result{display:none;animation:sup .45s var(--ease)}
+.q-result.show{display:block}
+.q-result-card{background:#0D2235;border:1px solid #1e3a55;border-radius:22px;padding:48px;text-align:center}
+.qr-badge{display:inline-block;background:var(--lime);color:var(--ink);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:18px}
+.qr-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--lime);margin-bottom:12px;line-height:1}
+.qr-desc{font-size:.94rem;color:#9abfd8;line-height:1.75;max-width:460px;margin:0 auto 26px}
+.qr-flavors{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px}
+.qr-flavor{background:rgba(200,232,50,.1);border:1px solid rgba(200,232,50,.25);color:var(--lime);font-size:.74rem;font-weight:600;padding:6px 14px;border-radius:100px}
+.qr-actions{display:flex;gap:12px;justify-content:center}
+.btn-restart{background:transparent;border:1.5px solid #2a5070;color:#7fa8c8;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:13px 26px;border-radius:100px;transition:border-color .2s,color .2s}
+.btn-restart:hover{border-color:var(--lime);color:var(--lime)}
+
+/* ── CTA BAND ── */
+.cta-banner{background:var(--coral);padding:90px 60px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,.055) 1.5px,transparent 1.5px);background-size:20px 20px}
+.cta-banner>*{position:relative;z-index:1}
+.cta-banner h2{font-family:'Bebas Neue',sans-serif;font-size:3.4rem;color:var(--ink);line-height:1;margin-bottom:10px}
+.cta-banner p{font-size:.9rem;color:rgba(12,12,12,.65)}
+.cta-form{display:flex;gap:10px;flex-shrink:0}
+.cta-form input{background:#0a1e30;border:1px solid #2a5070;border-radius:100px;padding:14px 26px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.88rem;width:240px;outline:none}
+.cta-form input::placeholder{color:#5a8aaa}
+.cta-form button{background:var(--lime);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border-radius:100px;border:none;transition:background .2s,color .2s,transform .15s}
+.cta-form button:hover{background:var(--ink);color:var(--lime);transform:scale(1.04)}
+
+/* ── FOOTER ── */
+footer{background:#0A1824;border-top:1px solid #1a3448;padding:64px 60px 36px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px}
+.ft-brand{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--lime);margin-bottom:14px}
+.ft-tagline{font-size:.82rem;color:#6090b0;line-height:1.7;max-width:220px}
+.ft-socials{display:flex;gap:8px;margin-top:22px}
+.ft-social-pill{background:#132840;border:1px solid #1e3a55;color:#7fa8c8;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:100px;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+.ft-social-pill:hover{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.ft-col h4{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5a8aaa;margin-bottom:18px}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:10px}
+.ft-col a{color:#6090b0;text-decoration:none;font-size:.83rem;transition:color .2s}
+.ft-col a:hover{color:var(--lime)}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid #1a3448}
+.ft-bottom p{font-size:.74rem;color:#3a6080}
+
+/* ── MODAL ── */
+.modal-wrap{position:fixed;inset:0;background:rgba(5,15,28,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:900;display:none;align-items:center;justify-content:center}
+.modal-wrap.open{display:flex;animation:fadein .25s ease}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal-box{background:#0D2235;border:1px solid #1e3a55;border-radius:24px;padding:52px;max-width:460px;width:90%;position:relative}
+.modal-close{position:absolute;top:20px;right:22px;background:none;border:none;color:#7fa8c8;font-size:1.5rem;transition:color .2s}
+.modal-close:hover{color:var(--lime)}
+.modal-box h3{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--lime);margin-bottom:10px}
+.modal-box p{font-size:.88rem;color:#8aadcc;line-height:1.7;margin-bottom:26px}
+.modal-box input{width:100%;background:#0a1e30;border:1px solid #2a5070;border-radius:100px;padding:13px 22px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;margin-bottom:12px;transition:border-color .2s}
+.modal-box input:focus{border-color:var(--lime)}
+.modal-submit{width:100%;background:var(--lime);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.09em;text-transform:uppercase;padding:16px;border-radius:100px;border:none;transition:background .2s,color .2s,transform .15s}
+.modal-submit:hover{background:var(--coral);color:var(--cream);transform:scale(1.02)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVENESS
+══════════════════════════════════════════ */
+
+/* ── Touch devices: hide custom cursor ── */
+@media (hover:none),(pointer:coarse){
+  #cursor{display:none}
+  body,a,button{cursor:auto}
+}
+
+/* ── INTRO — scale to viewport on mobile ── */
+@media(max-width:640px){
+  .intro-orb{width:320px;height:320px;filter:blur(28px)}
+  .intro-orb2{width:200px;height:200px}
+  .intro-logo{font-size:2.4rem;top:32px}
+  .intro-scene svg.intro-cat{width:220px;height:250px}
+  .intro-bowl svg{width:130px;height:46px}
+  .intro-tagline{font-size:1.7rem;letter-spacing:.12em;margin-top:18px;text-align:center}
+  .intro-sub{font-size:.75rem;letter-spacing:.12em;text-align:center}
+  /* shrink pellets stay in scene */
+  .food-p{transform:scale(.7)}
+}
+
+/* ── ANNOUNCE BAR ── */
+@media(max-width:640px){
+  .ann-bar{font-size:.65rem;padding:7px 12px;line-height:1.4}
+}
+
+/* ── NAV — mobile hamburger approach: hide links, show logo + cta only ── */
+@media(max-width:768px){
+  nav{padding:0 20px;top:0;height:58px}
+  .nav-links{display:none}
+  .nav-logo-text{font-size:1.5rem}
+}
+
+/* ── HERO ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:74px;min-height:auto}
+  .hero-right{display:none}
+  .hero-left{padding:48px 24px 52px}
+  .hero-h1{font-size:clamp(4.5rem,18vw,7rem)}
+  .hero-tagline{font-size:.92rem;max-width:100%}
+  .hero-stats{gap:22px;flex-wrap:wrap}
+  .hstat-num{font-size:2.4rem}
+  .hstat-label{font-size:.78rem}
+  .hero-orb{width:320px;height:320px;right:-60px}
+}
+@media(max-width:480px){
+  .hero-left{padding:40px 18px 44px}
+  .hero-h1{font-size:clamp(3.8rem,16vw,6rem)}
+  .hero-btns{flex-direction:column;align-items:flex-start}
+  .hero-stats{gap:18px}
+}
+
+/* ── TICKER ── */
+@media(max-width:640px){
+  .ticker-item{font-size:.78rem;padding:0 10px}
+}
+
+/* ── MANIFESTO ── */
+@media(max-width:768px){
+  .manifesto{padding:64px 24px}
+  .manifesto h2{font-size:clamp(2.8rem,10vw,5rem)}
+  .manifesto p{font-size:1rem}
+  .mstar{display:none}
+}
+
+/* ── PRODUCTS / FLAVOR CARDS ── */
+@media(max-width:900px){
+  .products{padding:72px 24px}
+  .products-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px}
+  .products-note{text-align:left;max-width:100%}
+  .flavor-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .fcard{min-height:420px}
+}
+@media(max-width:520px){
+  .flavor-grid{grid-template-columns:1fr}
+  .fcard{min-height:380px}
+  /* On mobile, show ingredient overlay on tap instead of hover */
+  .ing-overlay{display:none}
+  .fcard.tapped .ing-overlay{display:flex;opacity:1;transform:none;pointer-events:auto}
+  .fcard-cta{padding:13px}
+}
+
+/* ── WHY SECTION ── */
+@media(max-width:900px){
+  .why{padding:72px 24px}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .why-grid{grid-template-columns:1fr}
+  .why h2{font-size:clamp(2.4rem,10vw,4rem)}
+}
+
+/* ── TRANSPARENCY ── */
+@media(max-width:768px){
+  .trans-sec{padding:72px 24px}
+  .trans-sec h2{font-size:clamp(2.4rem,10vw,4rem)}
+  .pill-wrap{gap:8px}
+  .pill{font-size:.75rem;padding:9px 16px}
+}
+
+/* ── PRICING ── */
+@media(max-width:1000px){
+  .pricing{padding:72px 24px}
+  .plans-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+}
+@media(max-width:560px){
+  .plans-grid{grid-template-columns:1fr}
+  .pricing h2{font-size:clamp(2.4rem,10vw,4rem)}
+}
+
+/* ── PROOF ── */
+@media(max-width:900px){
+  .proof{grid-template-columns:1fr;padding:64px 24px;gap:28px}
+}
+
+/* ── HOW ── */
+@media(max-width:900px){
+  .how{padding:72px 24px}
+  .how h2{font-size:clamp(2.4rem,10vw,4rem);margin-bottom:44px}
+  .steps{grid-template-columns:repeat(2,1fr);gap:32px}
+  .steps::before{display:none}
+}
+@media(max-width:520px){
+  .steps{grid-template-columns:1fr;gap:28px}
+}
+
+/* ── QUIZ ── */
+@media(max-width:768px){
+  .quiz-section{padding:72px 24px}
+  .quiz-section h2{font-size:clamp(2.4rem,10vw,4rem)}
+  #quiz-box{max-width:100%}
+  .q-card{padding:28px 20px}
+  .q-options{grid-template-columns:1fr}
+  .q-result-card{padding:28px 20px}
+}
+
+/* ── CTA BANNER ── */
+@media(max-width:768px){
+  .cta-banner{flex-direction:column;padding:64px 24px;text-align:center}
+  .cta-banner h2{font-size:2.4rem}
+  .cta-form{flex-direction:column;width:100%}
+  .cta-form input{width:100%}
+}
+
+/* ── FOOTER ── */
+@media(max-width:900px){
+  footer{padding:52px 24px 28px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:520px){
+  .ft-grid{grid-template-columns:1fr;gap:24px}
+  .ft-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+
+/* ── MODAL ── */
+@media(max-width:520px){
+  .modal-box{padding:32px 22px;border-radius:20px}
+  .modal-box h3{font-size:1.9rem}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ INTRO SCREEN ══ -->
+<div id="intro">
+  <div class="intro-orb"></div>
+  <div class="intro-orb2"></div>
+  <div class="intro-logo">PURLEY</div>
+
+  <div class="intro-scene">
+    <!-- food pellets flying in -->
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+    <div class="food-p"></div>
+
+    <!-- sparkle bursts -->
+    <div class="i-spark">
+      <svg width="28" height="28" viewBox="0 0 28 28">
+        <path d="M14 2 L15.6 11 L24 14 L15.6 17 L14 26 L12.4 17 L4 14 L12.4 11 Z" fill="#C8E832"/>
+      </svg>
+    </div>
+    <div class="i-spark">
+      <svg width="22" height="22" viewBox="0 0 22 22">
+        <path d="M11 2 L12.2 8.5 L19 11 L12.2 13.5 L11 20 L9.8 13.5 L3 11 L9.8 8.5 Z" fill="#FF5C8A"/>
+      </svg>
+    </div>
+    <div class="i-spark">
+      <svg width="20" height="20" viewBox="0 0 20 20">
+        <path d="M10 1 L11 7.5 L18 10 L11 12.5 L10 19 L9 12.5 L2 10 L9 7.5 Z" fill="#F04E3B"/>
+      </svg>
+    </div>
+    <div class="i-spark">
+      <svg width="16" height="16" viewBox="0 0 16 16">
+        <path d="M8 1 L9 5.5 L14 8 L9 10.5 L8 15 L7 10.5 L2 8 L7 5.5 Z" fill="#BBA8FF"/>
+      </svg>
+    </div>
+    <div class="i-spark">
+      <svg width="32" height="32" viewBox="0 0 32 32">
+        <path d="M16 2 L18.5 12 L29 16 L18.5 20 L16 30 L13.5 20 L3 16 L13.5 12 Z" fill="#7FD4F5"/>
+      </svg>
+    </div>
+    <div class="i-spark">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M12 1 L14 9 L22 12 L14 15 L12 23 L10 15 L2 12 L10 9 Z" fill="#FF8C38"/>
+      </svg>
+    </div>
+
+    <!-- hearts -->
+    <div class="i-heart">💚</div>
+    <div class="i-heart">💛</div>
+    <div class="i-heart">🐾</div>
+    <div class="i-heart">✨</div>
+
+    <!-- THE INTRO CAT — same Ghibli style as hero, eating/happy -->
+    <svg class="intro-cat" width="360" height="410" viewBox="0 0 300 340" fill="none">
+      <!-- shadow -->
+      <ellipse cx="152" cy="330" rx="68" ry="8" fill="#000" opacity=".12"/>
+      <!-- body -->
+      <path d="M72 268 Q62 330 152 336 Q242 330 232 268 Q240 212 224 180 Q208 148 152 148 Q96 148 80 180 Q64 212 72 268Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.2"/>
+      <ellipse cx="152" cy="248" rx="50" ry="68" fill="white" stroke="#EDE3CC" stroke-width="1.2"/>
+      <!-- head -->
+      <circle cx="152" cy="124" r="84" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.2"/>
+      <!-- LEFT EAR -->
+      <path d="M80 98 Q62 36 90 22 Q106 14 108 72Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M83 95 Q68 43 91 31 Q104 24 107 70Z" fill="#FFB3C6"/>
+      <!-- RIGHT EAR -->
+      <path d="M224 98 Q242 36 214 22 Q198 14 192 72Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M221 95 Q236 43 213 31 Q200 24 193 70Z" fill="#FFB3C6"/>
+      <!-- LEFT EYE (closed happy crescent — eating/squinting with joy) -->
+      <path d="M112 118 Q124 106 136 118" stroke="#0C0C0C" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M112 118 Q124 130 136 118" stroke="#0C0C0C" stroke-width="3" fill="rgba(12,12,12,.08)" stroke-linecap="round"/>
+      <!-- RIGHT EYE (closed happy) -->
+      <path d="M168 118 Q180 106 192 118" stroke="#0C0C0C" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M168 118 Q180 130 192 118" stroke="#0C0C0C" stroke-width="3" fill="rgba(12,12,12,.08)" stroke-linecap="round"/>
+      <!-- sparkle beside each squint -->
+      <circle cx="140" cy="108" r="4" fill="white" opacity=".85"/>
+      <circle cx="165" cy="108" r="2.5" fill="white" opacity=".85"/>
+      <!-- NOSE -->
+      <path d="M152 144 L146 138 L158 138Z" fill="#FF5C8A"/>
+      <line x1="152" y1="144" x2="152" y2="148" stroke="#FF5C8A" stroke-width="1.5"/>
+      <!-- MOUTH — big open happy grin, munching -->
+      <path d="M132 152 Q142 162 152 158 Q162 162 172 152" stroke="#0C0C0C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <!-- tongue peeking out (eating!) -->
+      <ellipse cx="152" cy="158" rx="9" ry="7" fill="#FF8AB0"/>
+      <path d="M144 155 Q152 163 160 155" stroke="#FF5C8A" stroke-width="1" fill="none"/>
+      <!-- dimples -->
+      <circle cx="129" cy="151" r="2.5" fill="#0C0C0C" opacity=".12"/>
+      <circle cx="175" cy="151" r="2.5" fill="#0C0C0C" opacity=".12"/>
+      <!-- GHIBLI BLUSH -->
+      <circle cx="92" cy="136" r="9" fill="#FFB3C6" opacity=".82"/>
+      <circle cx="104" cy="148" r="9" fill="#FFB3C6" opacity=".82"/>
+      <circle cx="92" cy="160" r="9" fill="#FFB3C6" opacity=".82"/>
+      <circle cx="212" cy="136" r="9" fill="#FFB3C6" opacity=".82"/>
+      <circle cx="200" cy="148" r="9" fill="#FFB3C6" opacity=".82"/>
+      <circle cx="212" cy="160" r="9" fill="#FFB3C6" opacity=".82"/>
+      <!-- WHISKERS -->
+      <line x1="30" y1="138" x2="120" y2="132" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="30" y1="148" x2="120" y2="146" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="30" y1="158" x2="120" y2="155" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="274" y1="138" x2="184" y2="132" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="274" y1="148" x2="184" y2="146" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="274" y1="158" x2="184" y2="155" stroke="#0C0C0C" stroke-width="1.4"/>
+      <!-- PAWS -->
+      <ellipse cx="108" cy="312" rx="36" ry="24" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2"/>
+      <ellipse cx="196" cy="312" rx="36" ry="24" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2"/>
+      <line x1="99"  y1="300" x2="99"  y2="316" stroke="#0C0C0C" stroke-width="1.3"/>
+      <line x1="108" y1="297" x2="108" y2="318" stroke="#0C0C0C" stroke-width="1.3"/>
+      <line x1="117" y1="300" x2="117" y2="316" stroke="#0C0C0C" stroke-width="1.3"/>
+      <line x1="187" y1="300" x2="187" y2="316" stroke="#0C0C0C" stroke-width="1.3"/>
+      <line x1="196" y1="297" x2="196" y2="318" stroke="#0C0C0C" stroke-width="1.3"/>
+      <line x1="205" y1="300" x2="205" y2="316" stroke="#0C0C0C" stroke-width="1.3"/>
+      <!-- tail excited/up -->
+      <path d="M232 278 Q278 244 272 192 Q268 152 240 160" stroke="#0C0C0C" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <path d="M232 278 Q278 244 272 192 Q268 152 240 160" stroke="#FBF4E6" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="240" cy="158" rx="10" ry="13" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2"/>
+      <!-- BERET lime -->
+      <ellipse cx="152" cy="46" rx="48" ry="13" fill="#C8E832" stroke="#0C0C0C" stroke-width="2"/>
+      <ellipse cx="152" cy="42" rx="30" ry="22" fill="#C8E832" stroke="#0C0C0C" stroke-width="2"/>
+      <path d="M136 36 Q152 26 168 36" stroke="#8FA520" stroke-width="1.4" fill="none"/>
+      <circle cx="174" cy="40" r="4" fill="#FF5C8A" stroke="#0C0C0C" stroke-width="1.3"/>
+    </svg>
+
+    <!-- bowl of Purley food -->
+    <div class="intro-bowl">
+      <svg width="200" height="70" viewBox="0 0 200 70" fill="none">
+        <!-- bowl shadow -->
+        <ellipse cx="100" cy="62" rx="85" ry="8" fill="#000" opacity=".12"/>
+        <!-- bowl body -->
+        <path d="M15 28 Q15 62 100 62 Q185 62 185 28 Z" fill="#1a3a6a" stroke="#2a5a9a" stroke-width="1.5"/>
+        <!-- bowl rim -->
+        <ellipse cx="100" cy="28" rx="85" ry="14" fill="#1e4880" stroke="#2a60a8" stroke-width="1.5"/>
+        <!-- food (lime colored freeze-dried bits) -->
+        <ellipse cx="100" cy="24" rx="68" ry="10" fill="#C8E832" opacity=".9"/>
+        <!-- food texture dots -->
+        <circle cx="80" cy="22" r="3.5" fill="#8FA520"/>
+        <circle cx="95" cy="24" r="4" fill="#A0BC20"/>
+        <circle cx="112" cy="21" r="3" fill="#8FA520"/>
+        <circle cx="70" cy="25" r="2.5" fill="#A0BC20"/>
+        <circle cx="125" cy="24" r="3.5" fill="#8FA520"/>
+        <!-- PURLEY label on bowl -->
+        <text x="100" y="47" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#C8E832" letter-spacing="2">PURLEY</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="intro-tagline">OUTRAGEOUSLY GOOD.</div>
+  <div class="intro-sub">Freeze-Dried Cat Food</div>
+</div>
+
+<!-- ══ CURSOR ══ -->
+<div id="cursor"></div>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-wrap" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close-btn">&#x2715;</button>
+    <h3>Start Your Trial</h3>
+    <p>Get your first Purley Freeze-Dried box shipped free. Cancel any time &mdash; no phone calls, no guilt trips.</p>
+    <input type="text" placeholder="Your cat's name &#x1F431;" id="m-cat">
+    <input type="email" placeholder="Your email address">
+    <button class="modal-submit" id="m-submit">Send Me My Trial Box &#x2192;</button>
+  </div>
+</div>
+
+<!-- ══ PAGE ══ -->
+<div class="ann-bar">&#x1F43E; FREE TRIAL BOX &middot; <strong>Code: GOOUTRAGEOUSLY</strong> &middot; <a href="#" class="open-modal">Claim now &rarr;</a></div>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="48" fill="#C8E832"/>
+      <path d="M20 47 Q10 18 28 10 Q40 5 42 30 Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M22 44 Q14 21 29 14 Q38 9 40 29 Z" fill="#FF5C8A"/>
+      <path d="M80 47 Q90 18 72 10 Q60 5 58 30 Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M78 44 Q86 21 71 14 Q62 9 60 29 Z" fill="#FF5C8A"/>
+      <ellipse cx="50" cy="60" rx="31" ry="28" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2"/>
+      <ellipse cx="37" cy="55" rx="9.5" ry="10.5" fill="#0C0C0C"/>
+      <path d="M27 50 Q37 42 47 50" stroke="#0C0C0C" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="37" cy="55" rx="7" ry="7.5" fill="#2C5F9B"/>
+      <ellipse cx="37" cy="55" rx="4.5" ry="5" fill="#0C0C0C"/>
+      <circle cx="40.5" cy="58" r="2.5" fill="white"/>
+      <circle cx="34" cy="51" r="1.4" fill="white"/>
+      <path d="M28 60 Q37 66 46 60" stroke="#0C0C0C" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="63" cy="55" rx="9.5" ry="10.5" fill="#0C0C0C"/>
+      <path d="M53 50 Q63 42 73 50" stroke="#0C0C0C" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="63" cy="55" rx="7" ry="7.5" fill="#2C5F9B"/>
+      <ellipse cx="63" cy="55" rx="4.5" ry="5" fill="#0C0C0C"/>
+      <circle cx="66.5" cy="58" r="2.5" fill="white"/>
+      <circle cx="60" cy="51" r="1.4" fill="white"/>
+      <path d="M54 60 Q63 66 72 60" stroke="#0C0C0C" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M50 69 L45.5 64 L54.5 64 Z" fill="#FF5C8A"/>
+      <path d="M43 73 Q47 79 50 76 Q53 79 57 73" stroke="#0C0C0C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <circle cx="25" cy="63" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <circle cx="29" cy="67" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <circle cx="25" cy="71" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <circle cx="75" cy="63" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <circle cx="71" cy="67" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <circle cx="75" cy="71" r="2.2" fill="#FFB3C6" opacity=".85"/>
+      <line x1="6" y1="64" x2="36" y2="62" stroke="#0C0C0C" stroke-width="1.1"/>
+      <line x1="6" y1="68" x2="36" y2="67" stroke="#0C0C0C" stroke-width="1.1"/>
+      <line x1="6" y1="72" x2="36" y2="71" stroke="#0C0C0C" stroke-width="1.1"/>
+      <line x1="94" y1="64" x2="64" y2="62" stroke="#0C0C0C" stroke-width="1.1"/>
+      <line x1="94" y1="68" x2="64" y2="67" stroke="#0C0C0C" stroke-width="1.1"/>
+      <line x1="94" y1="72" x2="64" y2="71" stroke="#0C0C0C" stroke-width="1.1"/>
+    </svg>
+    <span class="nav-logo-text">PURLEY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#flavors">Our Flavours</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#why">Why Freeze-Dried</a></li>
+    <li><a href="#quiz-section">Take the Quiz</a></li>
+    <li><a href="#" class="nav-cta open-modal">Shop Now &rarr;</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">&#x26A1; Freeze-Dried &mdash; 98% nutrients preserved</div>
+    <h1 class="hero-h1">OUT<br><span class="c-lime">RAGE</span><br><span class="c-coral">OUSLY</span><br>GOOD.</h1>
+    <p class="hero-tagline"><strong>100% freeze-dried real meat for cats who know what's up.</strong><br>Zero fillers. Zero grains. Zero heat damage. Just pure nutrition, locked in and ready to go feral over.</p>
+    <div class="hero-btns">
+      <a class="btn btn-lime open-modal" href="#">Try a Trial Box &rarr;</a>
+      <a class="btn btn-ghost" href="#flavors">See All Flavours</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-num">100%</div><div class="hstat-label">Real Meat</div></div>
+      <div><div class="hstat-num">0</div><div class="hstat-label">Fillers</div></div>
+      <div><div class="hstat-num">4</div><div class="hstat-label">Flavours</div></div>
+      <div><div class="hstat-num">12K+</div><div class="hstat-label">Happy Cats</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <svg class="ghibli-cat" width="480" height="560" viewBox="0 0 480 560" fill="none">
+      <ellipse cx="236" cy="548" rx="108" ry="12" fill="#000" opacity=".15"/>
+      <ellipse cx="236" cy="390" rx="128" ry="148" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="3"/>
+      <ellipse cx="236" cy="396" rx="80" ry="110" fill="white"/>
+      <ellipse cx="236" cy="396" rx="80" ry="110" fill="none" stroke="#EDE3CC" stroke-width="1.5"/>
+      <circle cx="236" cy="196" r="132" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="3"/>
+      <path d="M120 156 Q90 56 136 34 Q160 22 166 116 Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.8" stroke-linejoin="round"/>
+      <path d="M126 151 Q101 66 137 48 Q157 38 162 113 Z" fill="#FFB3C6"/>
+      <path d="M352 156 Q382 56 344 34 Q320 22 314 116 Z" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.8" stroke-linejoin="round"/>
+      <path d="M346 151 Q371 66 343 48 Q323 38 318 113 Z" fill="#FFB3C6"/>
+      <ellipse cx="192" cy="186" rx="36" ry="38" fill="#0C0C0C"/>
+      <path d="M156 176 Q192 154 228 176" stroke="#0C0C0C" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="192" cy="186" rx="28" ry="29" fill="#3475B5"/>
+      <ellipse cx="192" cy="186" rx="18" ry="20" fill="#0C0C0C"/>
+      <circle cx="205" cy="199" r="9.5" fill="white"/>
+      <circle cx="181" cy="172" r="4.5" fill="white"/>
+      <circle cx="202" cy="172" r="2" fill="white"/>
+      <path d="M160 197 Q192 212 224 197" stroke="#0C0C0C" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="280" cy="186" rx="36" ry="38" fill="#0C0C0C"/>
+      <path d="M244 176 Q280 154 316 176" stroke="#0C0C0C" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="280" cy="186" rx="28" ry="29" fill="#3475B5"/>
+      <ellipse cx="280" cy="186" rx="18" ry="20" fill="#0C0C0C"/>
+      <circle cx="293" cy="199" r="9.5" fill="white"/>
+      <circle cx="269" cy="172" r="4.5" fill="white"/>
+      <circle cx="290" cy="172" r="2" fill="white"/>
+      <path d="M248 197 Q280 212 312 197" stroke="#0C0C0C" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M236 232 L224 216 L248 216 Z" fill="#FF5C8A"/>
+      <path d="M210 250 Q224 265 236 258 Q248 265 262 250" stroke="#0C0C0C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle cx="207" cy="249" r="3" fill="#0C0C0C" opacity=".18"/>
+      <circle cx="265" cy="249" r="3" fill="#0C0C0C" opacity=".18"/>
+      <circle cx="148" cy="215" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <circle cx="164" cy="230" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <circle cx="148" cy="245" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <circle cx="324" cy="215" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <circle cx="308" cy="230" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <circle cx="324" cy="245" r="9.5" fill="#FFB3C6" opacity=".8"/>
+      <path d="M54 219 Q120 213 188 212" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <path d="M54 232 Q120 229 188 229" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <path d="M54 245 Q120 242 188 241" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <path d="M418 219 Q352 213 284 212" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <path d="M418 232 Q352 229 284 229" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <path d="M418 245 Q352 242 284 241" stroke="#0C0C0C" stroke-width="1.6" fill="none"/>
+      <ellipse cx="168" cy="516" rx="52" ry="36" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.5"/>
+      <ellipse cx="304" cy="516" rx="52" ry="36" fill="#FBF4E6" stroke="#0C0C0C" stroke-width="2.5"/>
+      <line x1="156" y1="496" x2="156" y2="516" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="168" y1="494" x2="168" y2="518" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="180" y1="496" x2="180" y2="516" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="292" y1="496" x2="292" y2="516" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="304" y1="494" x2="304" y2="518" stroke="#0C0C0C" stroke-width="1.4"/>
+      <line x1="316" y1="496" x2="316" y2="516" stroke="#0C0C0C" stroke-width="1.4"/>
+      <path d="M360 450 Q442 400 452 314 Q460 234 402 255" stroke="#0C0C0C" stroke-width="20" fill="none" stroke-linecap="round"/>
+      <path d="M360 450 Q442 400 452 314 Q460 234 402 255" stroke="#FBF4E6" stroke-width="13" fill="none" stroke-linecap="round"/>
+      <path d="M402 255 Q388 240 408 232 Q428 224 426 246" stroke="#0C0C0C" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M402 255 Q388 240 408 232 Q428 224 426 246" stroke="#FBF4E6" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="236" cy="76" rx="68" ry="19" fill="#C8E832" stroke="#0C0C0C" stroke-width="2"/>
+      <ellipse cx="236" cy="71" rx="44" ry="33" fill="#C8E832" stroke="#0C0C0C" stroke-width="2"/>
+      <path d="M216 62 Q236 46 256 62" stroke="#8FA520" stroke-width="1.5" fill="none"/>
+      <ellipse cx="236" cy="76" rx="68" ry="8" fill="none" stroke="#8FA520" stroke-width="1.2"/>
+      <circle cx="236" cy="44" r="6" fill="#8FA520" stroke="#0C0C0C" stroke-width="1.5"/>
+      <circle cx="52" cy="136" r="7" fill="#0C0C0C" opacity=".7"/>
+      <circle cx="46" cy="152" r="5" fill="#0C0C0C" opacity=".5"/>
+      <circle cx="58" cy="148" r="4" fill="#0C0C0C" opacity=".4"/>
+      <circle cx="50" cy="134" r="1.2" fill="white"/>
+      <circle cx="54" cy="134" r="1.2" fill="white"/>
+      <text x="388" y="145" font-size="20" fill="#C8E832" opacity=".75">&#x2736;</text>
+      <text x="24" y="100" font-size="24" fill="#F04E3B" opacity=".65">&#x2736;</text>
+      <text x="426" y="420" font-size="14" fill="#BBA8FF" opacity=".8">&#x2736;</text>
+      <text x="400" y="84" font-size="12" fill="#FF5C8A" opacity=".75">&#x2736;</text>
+    </svg>
+  </div>
+</section>
+
+<div class="ticker lime">
+  <div class="ticker-inner">
+    <span class="ticker-item">FREEZE-DRIED</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">REAL MEAT</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">ZERO FILLERS</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">HUMAN-GRADE</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">VET-FORMULATED</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">OUTRAGEOUSLY GOOD</span><span class="ticker-item">&#x2736;</span>
+    <span class="ticker-item">FREEZE-DRIED</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">REAL MEAT</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">ZERO FILLERS</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">HUMAN-GRADE</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">VET-FORMULATED</span><span class="ticker-item">&#x2736;</span><span class="ticker-item">OUTRAGEOUSLY GOOD</span><span class="ticker-item">&#x2736;</span>
+  </div>
+</div>
+
+<section class="manifesto">
+  <div class="mstar"><svg width="86" height="86" viewBox="0 0 86 86"><path d="M43 4 L46 36 L74 18 L54 43 L86 43 L54 49 L74 68 L46 50 L43 82 L40 50 L12 68 L32 49 L0 43 L32 37 L12 18 L40 36 Z" fill="#0C0C0C"/></svg></div>
+  <div class="manifesto-inner reveal">
+    <h2>REAL FOOD.<br>REAL <span class="stroke">RESULTS.</span></h2>
+    <p>Cats are <strong>obligate carnivores</strong> &mdash; they were built to eat meat, not maize, not wheat, and certainly not &ldquo;meat derivative.&rdquo; Freeze-drying locks in <strong>98% of nutrients</strong> that cooking destroys. Every Purley pouch is pure protein, real organ, real bone &mdash; the way nature designed it. <strong>Nothing hidden. Nothing processed beyond recognition.</strong> Just outrageously good food for your little apex predator.</p>
+  </div>
+</section>
+
+<!-- ══ 4 FLAVOUR CARDS ══ -->
+<section class="products" id="flavors">
+  <div class="products-header reveal">
+    <div>
+      <div class="section-label sl-cream">Freeze-Dried Range</div>
+      <h2>4 FLAVOURS.<br>ALL <em>OUTRAGEOUSLY</em> GOOD.</h2>
+    </div>
+    <p class="products-note"><strong>Hover any flavour card</strong> to see every single ingredient inside. No mysteries — ever.</p>
+  </div>
+  <div class="flavor-grid">
+
+    <!-- CARD 1: CHICKEN & LIVER -->
+    <div class="fcard fc-chicken reveal">
+      <div class="fcard-band"></div>
+      <div class="fcard-splash"></div>
+      <div class="fcard-body">
+        <div class="fcard-emoji-wrap">&#x1F413;</div>
+        <div class="fcard-name">Chicken<br>&amp; Liver</div>
+        <div class="fcard-subtitle">⭐ The Classic</div>
+        <div class="fcard-desc">Our bestseller. Free-range chicken with nutrient-dense liver &mdash; the combination cats were literally designed to eat. Irresistibly aromatic.</div>
+        <div class="fcard-prot"><span class="pn">78%</span>&nbsp;protein</div>
+      </div>
+      <div class="fcard-footer">
+        <a class="fcard-cta open-modal" href="#">Subscribe &amp; Save &rarr;</a>
+      </div>
+      <div class="ing-overlay">
+        <div class="iol-flavor" style="color:#F5C400">Chicken &amp; Liver &middot; Freeze-Dried</div>
+        <div class="iol-title">WHAT'S INSIDE</div>
+        <div class="iol-items">
+          <div class="iol-item"><div class="iol-ico">&#x1F357;</div><div class="iol-text"><strong>Free-Range Chicken 68%</strong><span>Breast + thigh, human-grade</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAD9;</div><div class="iol-text"><strong>Chicken Liver 18%</strong><span>Vitamin A, B12, iron powerhouse</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAC0;</div><div class="iol-text"><strong>Chicken Heart 10%</strong><span>Taurine-dense. Essential for cats.</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1F9B4;</div><div class="iol-text"><strong>Ground Bone 4%</strong><span>Natural calcium + phosphorus</span></div></div>
+        </div>
+        <span class="iol-badge">&#x2713; 4 ingredients. That's it.</span>
+        <a class="iol-sub-btn open-modal" href="#">Add to Subscription &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CARD 2: SALMON & ROE -->
+    <div class="fcard fc-salmon reveal">
+      <div class="fcard-band"></div>
+      <div class="fcard-splash"></div>
+      <div class="fcard-body">
+        <div class="fcard-emoji-wrap">&#x1F41F;</div>
+        <div class="fcard-name">Salmon<br>&amp; Roe</div>
+        <div class="fcard-subtitle">&#x1F31F; The Omega King</div>
+        <div class="fcard-desc">Wild-caught Atlantic salmon with salmon roe &mdash; an omega-3 bomb for skin, coat, and that feral look in their eyes.</div>
+        <div class="fcard-prot"><span class="pn">72%</span>&nbsp;protein</div>
+      </div>
+      <div class="fcard-footer">
+        <a class="fcard-cta open-modal" href="#">Subscribe &amp; Save &rarr;</a>
+      </div>
+      <div class="ing-overlay">
+        <div class="iol-flavor" style="color:#FF6B47">Salmon &amp; Roe &middot; Freeze-Dried</div>
+        <div class="iol-title">WHAT'S INSIDE</div>
+        <div class="iol-items">
+          <div class="iol-item"><div class="iol-ico">&#x1F41F;</div><div class="iol-text"><strong>Wild Salmon 65%</strong><span>Atlantic, MSC-certified</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1F7E0;</div><div class="iol-text"><strong>Salmon Roe 15%</strong><span>Astaxanthin + DHA + EPA</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAC0;</div><div class="iol-text"><strong>Salmon Heart 12%</strong><span>CoQ10 + taurine</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAD9;</div><div class="iol-text"><strong>Salmon Liver 8%</strong><span>Omega-3 rich — glows in the coat</span></div></div>
+        </div>
+        <span class="iol-badge">&#x2713; 100% salmon. Zero land animal.</span>
+        <a class="iol-sub-btn open-modal" href="#">Add to Subscription &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CARD 3: RABBIT & MARROW -->
+    <div class="fcard fc-rabbit reveal">
+      <div class="fcard-band"></div>
+      <div class="fcard-splash"></div>
+      <div class="fcard-body">
+        <div class="fcard-emoji-wrap">&#x1F407;</div>
+        <div class="fcard-name">Rabbit<br>&amp; Marrow</div>
+        <div class="fcard-subtitle">&#x1F9EC; The Ancestral</div>
+        <div class="fcard-desc">Pasture-raised rabbit with rich bone marrow &mdash; closest to what wild cats hunt. Low-fat, high-protein, hypoallergenic perfection.</div>
+        <div class="fcard-prot"><span class="pn">80%</span>&nbsp;protein</div>
+      </div>
+      <div class="fcard-footer">
+        <a class="fcard-cta open-modal" href="#">Subscribe &amp; Save &rarr;</a>
+      </div>
+      <div class="ing-overlay">
+        <div class="iol-flavor" style="color:#9B84FF">Rabbit &amp; Marrow &middot; Freeze-Dried</div>
+        <div class="iol-title">WHAT'S INSIDE</div>
+        <div class="iol-items">
+          <div class="iol-item"><div class="iol-ico">&#x1F407;</div><div class="iol-text"><strong>Pasture Rabbit 62%</strong><span>Whole muscle meat</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1F9B4;</div><div class="iol-text"><strong>Bone Marrow 16%</strong><span>Collagen, iron, natural fat</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAD9;</div><div class="iol-text"><strong>Rabbit Liver 14%</strong><span>Vitamin A, K2, zinc</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAD8;</div><div class="iol-text"><strong>Rabbit Kidney 8%</strong><span>B12, riboflavin, selenium</span></div></div>
+        </div>
+        <span class="iol-badge">&#x2713; Hypoallergenic &middot; Novel protein</span>
+        <a class="iol-sub-btn open-modal" href="#">Add to Subscription &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CARD 4: BEEF & KIDNEY -->
+    <div class="fcard fc-beef reveal">
+      <div class="fcard-band"></div>
+      <div class="fcard-splash"></div>
+      <div class="fcard-body">
+        <div class="fcard-emoji-wrap">&#x1F969;</div>
+        <div class="fcard-name">Beef<br>&amp; Kidney</div>
+        <div class="fcard-subtitle">&#x1F4AA; The Powerhouse</div>
+        <div class="fcard-desc">Grass-fed beef with kidney &mdash; a complete organ-muscle combo loaded with B-vitamins and natural taurine. The highest protein in the range.</div>
+        <div class="fcard-prot"><span class="pn">82%</span>&nbsp;protein</div>
+      </div>
+      <div class="fcard-footer">
+        <a class="fcard-cta open-modal" href="#">Subscribe &amp; Save &rarr;</a>
+      </div>
+      <div class="ing-overlay">
+        <div class="iol-flavor" style="color:#5ACA6A">Beef &amp; Kidney &middot; Freeze-Dried</div>
+        <div class="iol-title">WHAT'S INSIDE</div>
+        <div class="iol-items">
+          <div class="iol-item"><div class="iol-ico">&#x1F969;</div><div class="iol-text"><strong>Grass-Fed Beef 60%</strong><span>Chuck + brisket, never feedlot</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAD8;</div><div class="iol-text"><strong>Beef Kidney 20%</strong><span>B12, selenium, riboflavin</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1FAC0;</div><div class="iol-text"><strong>Beef Heart 12%</strong><span>Taurine + CoQ10 + L-carnitine</span></div></div>
+          <div class="iol-item"><div class="iol-ico">&#x1F9B4;</div><div class="iol-text"><strong>Beef Bone Meal 8%</strong><span>Calcium + phosphorus balance</span></div></div>
+        </div>
+        <span class="iol-badge">&#x2713; Grass-fed &middot; Hormone-free</span>
+        <a class="iol-sub-btn open-modal" href="#">Add to Subscription &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="ticker dark">
+  <div class="ticker-inner">
+    <span class="ticker-item">NO FILLERS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO GRAINS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO BY-PRODUCTS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO ARTIFICIAL ANYTHING</span><span class="ticker-item">&middot;</span><span class="ticker-item">SUBSCRIBE &amp; SAVE</span><span class="ticker-item">&middot;</span><span class="ticker-item">FREE DELIVERY</span><span class="ticker-item">&middot;</span>
+    <span class="ticker-item">NO FILLERS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO GRAINS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO BY-PRODUCTS</span><span class="ticker-item">&middot;</span><span class="ticker-item">NO ARTIFICIAL ANYTHING</span><span class="ticker-item">&middot;</span><span class="ticker-item">SUBSCRIBE &amp; SAVE</span><span class="ticker-item">&middot;</span><span class="ticker-item">FREE DELIVERY</span><span class="ticker-item">&middot;</span>
+  </div>
+</div>
+
+<!-- ══ SUBSCRIPTION PRICING ══ -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-label sl-dark reveal">Subscription Plans</div>
+    <h2 class="reveal">SUBSCRIBE &amp; <em>SAVE.</em></h2>
+    <p class="pricing-sub reveal">The longer you commit, the more you save. Cancel any time — we believe in earning your loyalty, not locking you in.</p>
+    <div class="plans-grid">
+
+      <!-- MONTHLY -->
+      <div class="plan monthly reveal">
+        <div class="plan-top">
+          <div class="plan-period">Monthly</div>
+          <div class="plan-price"><span class="cur">﷼</span>281<span class="per">/mo</span></div>
+          <div class="plan-total">﷼281 billed monthly</div>
+          <div class="plan-save">Standard rate</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-perks">
+          <div class="plan-perk">All 4 flavours available</div>
+          <div class="plan-perk">Free shipping every month</div>
+          <div class="plan-perk">Pause or cancel any time</div>
+          <div class="plan-perk">Swap flavours freely</div>
+        </div>
+        <div class="plan-cta-wrap">
+          <a class="plan-cta open-modal" href="#">Start Monthly &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 3 MONTHS -->
+      <div class="plan reveal">
+        <div class="plan-top">
+          <div class="plan-period">3 Months</div>
+          <div class="plan-price"><span class="cur">﷼</span>750<span class="per">/qtr</span></div>
+          <div class="plan-total">﷼250/mo · billed ﷼750</div>
+          <div class="plan-save">&#x1F4B0; Save ﷼94 vs monthly</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-perks">
+          <div class="plan-perk">Everything in Monthly</div>
+          <div class="plan-perk">Save ﷼94 upfront</div>
+          <div class="plan-perk">Priority customer support</div>
+          <div class="plan-perk">Pause or cancel any time</div>
+        </div>
+        <div class="plan-cta-wrap">
+          <a class="plan-cta open-modal" href="#">Start 3-Month &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 6 MONTHS — FEATURED -->
+      <div class="plan featured reveal">
+        <div class="plan-top">
+          <div class="plan-period">6 Months</div>
+          <div class="plan-price"><span class="cur">﷼</span>1,500<span class="per">/6mo</span></div>
+          <div class="plan-total">﷼250/mo · billed ﷼1,500</div>
+          <div class="plan-save">&#x1F4B0; Save ﷼188 vs monthly</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-perks">
+          <div class="plan-perk">Everything in 3-Month</div>
+          <div class="plan-perk">Save ﷼188 upfront</div>
+          <div class="plan-perk">Free taster box on signup</div>
+          <div class="plan-perk">Early access to new flavours</div>
+        </div>
+        <div class="plan-cta-wrap">
+          <a class="plan-cta open-modal" href="#">Start 6-Month &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 12 MONTHS -->
+      <div class="plan reveal">
+        <div class="plan-top">
+          <div class="plan-period">12 Months</div>
+          <div class="plan-price"><span class="cur">﷼</span>3,000<span class="per">/yr</span></div>
+          <div class="plan-total">﷼250/mo · billed ﷼3,000</div>
+          <div class="plan-save">&#x1F4B0; Save ﷼375 vs monthly</div>
+        </div>
+        <div class="plan-divider"></div>
+        <div class="plan-perks">
+          <div class="plan-perk">Everything in 6-Month</div>
+          <div class="plan-perk">Save ﷼375 upfront</div>
+          <div class="plan-perk">Dedicated nutrition consult</div>
+          <div class="plan-perk">Annual cat health report</div>
+        </div>
+        <div class="plan-cta-wrap">
+          <a class="plan-cta open-modal" href="#">Start Annual &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="section-label sl-dark reveal">The Science</div>
+    <h2 class="reveal">WHY <em>FREEZE-DRIED</em><br>BEATS EVERYTHING ELSE.</h2>
+    <div class="why-grid">
+      <div class="why-card reveal"><div class="why-icon">&#x2744;&#xFE0F;</div><div class="why-title">98% NUTRIENTS RETAINED</div><div class="why-desc">Freeze-drying removes only water &mdash; not vitamins, not enzymes, not amino acids. Cooking destroys up to 40% of nutrition. We refuse to cook.</div></div>
+      <div class="why-card reveal"><div class="why-icon">&#x1F52C;</div><div class="why-title">VET-FORMULATED</div><div class="why-desc">Every recipe built by board-certified veterinary nutritionists. Not a marketing team. Actual doctors who care about your cat's health.</div></div>
+      <div class="why-card reveal"><div class="why-icon">&#x1F969;</div><div class="why-title">HUMAN-GRADE MEAT</div><div class="why-desc">Same USDA inspection standards as your dinner. Every protein sourced and handled to human food standards. Because your cat deserves that.</div></div>
+      <div class="why-card reveal"><div class="why-icon">&#x1F680;</div><div class="why-title">SHELF STABLE</div><div class="why-desc">Two-year shelf life without refrigeration until opened. No preservatives needed &mdash; the process itself preserves everything. Real food, no compromise.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="trans-sec" id="ingredients">
+  <div class="section-label sl-cream reveal">Full Transparency</div>
+  <h2 class="reveal">WHAT'S <span style="color:var(--lime)">IN</span> IT.<br>WHAT'S <span style="color:var(--coral)">NOT.</span></h2>
+  <p class="reveal">Every ingredient named. Every reason explained. We're proud of what's inside every pouch.</p>
+  <div class="pill-wrap" id="pill-wrap">
+    <span class="pill yes" data-d="0"><span class="ptag">&#x2713;</span> Free-range chicken</span>
+    <span class="pill yes" data-d="80"><span class="ptag">&#x2713;</span> Wild-caught salmon</span>
+    <span class="pill yes" data-d="160"><span class="ptag">&#x2713;</span> Grass-fed beef</span>
+    <span class="pill yes" data-d="240"><span class="ptag">&#x2713;</span> Pasture rabbit</span>
+    <span class="pill yes" data-d="320"><span class="ptag">&#x2713;</span> Beef heart</span>
+    <span class="pill yes" data-d="400"><span class="ptag">&#x2713;</span> Taurine</span>
+    <span class="pill yes" data-d="480"><span class="ptag">&#x2713;</span> Bone marrow</span>
+    <span class="pill yes" data-d="560"><span class="ptag">&#x2713;</span> Omega-3 DHA + EPA</span>
+    <span class="pill no"  data-d="720"><span class="ptag">&#x2717;</span> Corn syrup</span>
+    <span class="pill no"  data-d="800"><span class="ptag">&#x2717;</span> Wheat gluten</span>
+    <span class="pill no"  data-d="880"><span class="ptag">&#x2717;</span> Meat by-products</span>
+    <span class="pill no"  data-d="960"><span class="ptag">&#x2717;</span> Artificial colours</span>
+    <span class="pill no"  data-d="1040"><span class="ptag">&#x2717;</span> Carrageenan</span>
+    <span class="pill no"  data-d="1120"><span class="ptag">&#x2717;</span> "Natural flavors"</span>
+    <span class="pill no"  data-d="1200"><span class="ptag">&#x2717;</span> BHA / BHT</span>
+  </div>
+</section>
+
+<section class="proof" id="proof">
+  <div>
+    <div class="section-label sl-dark">Cat Parents Love Us</div>
+    <div class="proof-stat"><h3>4.9&#x2605;</h3><p>From 12,000+ verified reviews</p></div>
+    <div class="proof-stat" style="margin-top:20px"><h3>98%</h3><p>Would recommend to a friend</p></div>
+  </div>
+  <div class="review-card reveal">
+    <div class="r-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+    <p class="r-text">"My cat Mochi ignored every other food for three days after I switched to Purley. She sits by the fridge waiting. Shinier coat. More energy. Completely converted. I've ruined her forever and I'm not sorry."</p>
+    <div class="r-author">&mdash; Sarah K., Mochi's mum &#x1F431;</div>
+  </div>
+  <div class="review-card reveal">
+    <div class="r-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+    <p class="r-text">"Switched to the 6-month plan after the first box. The Beef &amp; Kidney has transformed my senior cat's coat and energy. Worth every penny — and saving ﷼188 helps too."</p>
+    <div class="r-author">&mdash; James T., 3 cats and counting &#x1F602;</div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="section-label sl-cream reveal">Simple Process</div>
+  <h2 class="reveal">GET STARTED IN 4 STEPS.</h2>
+  <div class="steps">
+    <div class="step reveal"><div class="step-num">01</div><div class="step-title">Take the Quiz</div><div class="step-desc">5 questions about your cat. We'll pinpoint the perfect flavour for their profile.</div></div>
+    <div class="step reveal"><div class="step-num">02</div><div class="step-title">Pick Your Plan</div><div class="step-desc">Choose from monthly, 3, 6 or 12-month subscriptions. Save up to ﷼375/year.</div></div>
+    <div class="step reveal"><div class="step-num">03</div><div class="step-title">We Ship Fast</div><div class="step-desc">Packed in eco boxes. No refrigeration needed in transit &mdash; freeze-dried magic.</div></div>
+    <div class="step reveal"><div class="step-num">04</div><div class="step-title">Cat Goes Feral</div><div class="step-desc">Rehydrate or serve dry. Watch chaos unfold. You've ruined them forever. You're welcome.</div></div>
+  </div>
+</section>
+
+<section class="quiz-section" id="quiz-section">
+  <div class="section-label sl-dark">Find Their Perfect Flavour</div>
+  <h2>WHICH PURLEY IS<br>RIGHT FOR YOUR CAT?</h2>
+  <p>5 quick questions &mdash; we'll figure it out together.</p>
+  <div id="quiz-box">
+    <div class="q-progress" id="q-progress" style="display:none">
+      <div class="q-dot" id="d1"></div><div class="q-dot" id="d2"></div>
+      <div class="q-dot" id="d3"></div><div class="q-dot" id="d4"></div><div class="q-dot" id="d5"></div>
+    </div>
+    <div class="q-card show" id="q1">
+      <div class="q-num">Question 1 of 5</div>
+      <div class="q-question">How old is your cat?</div>
+      <div class="q-options">
+        <div class="q-opt" data-v="kitten"><div class="q-opt-icon">&#x1F423;</div><div class="q-opt-text"><strong>Kitten (under 1 yr)</strong><span>Growing fast &mdash; needs DHA + extra protein</span></div></div>
+        <div class="q-opt" data-v="adult"><div class="q-opt-icon">&#x1F408;</div><div class="q-opt-text"><strong>Adult (1&ndash;7 yrs)</strong><span>Prime health maintenance</span></div></div>
+        <div class="q-opt" data-v="senior"><div class="q-opt-icon">&#x1F9E1;</div><div class="q-opt-text"><strong>Senior (7+ yrs)</strong><span>Joint &amp; cognitive support</span></div></div>
+        <div class="q-opt" data-v="adult"><div class="q-opt-icon">&#x1F937;</div><div class="q-opt-text"><strong>Not sure</strong><span>Rescue or unknown age</span></div></div>
+      </div>
+      <button class="q-next">Next &rarr;</button>
+    </div>
+    <div class="q-card" id="q2">
+      <div class="q-num">Question 2 of 5</div>
+      <div class="q-question">Any health goals?</div>
+      <div class="q-options">
+        <div class="q-opt" data-v="digestion"><div class="q-opt-icon">&#x1FAB4;</div><div class="q-opt-text"><strong>Sensitive digestion</strong><span>Gentle, easy-to-absorb food</span></div></div>
+        <div class="q-opt" data-v="coat"><div class="q-opt-icon">&#x2728;</div><div class="q-opt-text"><strong>Coat &amp; skin glow-up</strong><span>Omega-3 rich for real shine</span></div></div>
+        <div class="q-opt" data-v="joints"><div class="q-opt-icon">&#x1F9B4;</div><div class="q-opt-text"><strong>Joint support</strong><span>Collagen &amp; glucosamine</span></div></div>
+        <div class="q-opt" data-v="none"><div class="q-opt-icon">&#x1F4AA;</div><div class="q-opt-text"><strong>All healthy, just optimising</strong><span>Let's keep it that way</span></div></div>
+      </div>
+      <button class="q-next">Next &rarr;</button>
+    </div>
+    <div class="q-card" id="q3">
+      <div class="q-num">Question 3 of 5</div>
+      <div class="q-question">Any known allergies?</div>
+      <div class="q-options">
+        <div class="q-opt" data-v="chicken-allergy"><div class="q-opt-icon">&#x1F6AB;</div><div class="q-opt-text"><strong>Allergic to chicken</strong><span>Need fish or novel protein</span></div></div>
+        <div class="q-opt" data-v="fish-allergy"><div class="q-opt-icon">&#x1F6AB;</div><div class="q-opt-text"><strong>Allergic to fish</strong><span>Need red meat or poultry only</span></div></div>
+        <div class="q-opt" data-v="none"><div class="q-opt-icon">&#x2705;</div><div class="q-opt-text"><strong>No known allergies</strong><span>Full range available!</span></div></div>
+        <div class="q-opt" data-v="unknown"><div class="q-opt-icon">&#x2753;</div><div class="q-opt-text"><strong>Not sure</strong><span>We'll recommend something safe</span></div></div>
+      </div>
+      <button class="q-next">Next &rarr;</button>
+    </div>
+    <div class="q-card" id="q4">
+      <div class="q-num">Question 4 of 5</div>
+      <div class="q-question">How picky is your cat?</div>
+      <div class="q-options">
+        <div class="q-opt" data-v="picky"><div class="q-opt-icon">&#x1F451;</div><div class="q-opt-text"><strong>Extremely picky</strong><span>Has rejected food by smell alone</span></div></div>
+        <div class="q-opt" data-v="moderate"><div class="q-opt-icon">&#x1F914;</div><div class="q-opt-text"><strong>Somewhat selective</strong><span>Has preferences but eats</span></div></div>
+        <div class="q-opt" data-v="easy"><div class="q-opt-icon">&#x1F60B;</div><div class="q-opt-text"><strong>Eats literally anything</strong><span>A true apex carnivore</span></div></div>
+        <div class="q-opt" data-v="bored"><div class="q-opt-icon">&#x1F504;</div><div class="q-opt-text"><strong>Gets bored easily</strong><span>Needs variety to stay excited</span></div></div>
+      </div>
+      <button class="q-next">Next &rarr;</button>
+    </div>
+    <div class="q-card" id="q5">
+      <div class="q-num">Question 5 of 5</div>
+      <div class="q-question">Which plan suits you?</div>
+      <div class="q-options">
+        <div class="q-opt" data-v="monthly"><div class="q-opt-icon">&#x1F4C5;</div><div class="q-opt-text"><strong>Monthly — ﷼281/mo</strong><span>Full flexibility, cancel any time</span></div></div>
+        <div class="q-opt" data-v="quarterly"><div class="q-opt-icon">&#x1F4B0;</div><div class="q-opt-text"><strong>3 months — ﷼750</strong><span>Save ﷼94 vs monthly</span></div></div>
+        <div class="q-opt" data-v="biannual"><div class="q-opt-icon">&#x2B50;</div><div class="q-opt-text"><strong>6 months — ﷼1,500</strong><span>Save $50 + free taster box</span></div></div>
+        <div class="q-opt" data-v="annual"><div class="q-opt-icon">&#x1F3C6;</div><div class="q-opt-text"><strong>12 months — ﷼3,000</strong><span>Save $100 + nutrition consult</span></div></div>
+      </div>
+      <button class="q-next">See My Results &rarr;</button>
+    </div>
+    <div class="q-result" id="q-result">
+      <div class="q-result-card">
+        <div class="qr-badge">&#x1F389; Perfect Match Found</div>
+        <div style="font-size:3rem;margin-bottom:8px" id="r-emoji">&#x1F413;</div>
+        <div class="qr-name" id="r-name">CHICKEN &amp; LIVER</div>
+        <p class="qr-desc" id="r-desc"></p>
+        <div class="qr-flavors" id="r-flavors"></div>
+        <div class="qr-actions">
+          <a class="btn btn-lime open-modal" href="#">Subscribe Now &rarr;</a>
+          <button class="btn-restart" id="quiz-restart">Retake Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div>
+    <h2>TRY PURLEY.<br>YOUR CAT WILL<br>NEVER FORGIVE<br>YOU IF YOU DON'T.</h2>
+    <p>First box ships free. Subscribe from ﷼281/mo. Cancel any time.</p>
+  </div>
+  <div class="cta-form">
+    <input type="email" placeholder="your@email.com">
+    <button id="cta-btn">Start My Subscription &rarr;</button>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">PURLEY</div>
+      <p class="ft-tagline">Outrageously good freeze-dried cat food. Real ingredients. Zero apologies. Made for tiny apex predators who own your heart.</p>
+      <div class="ft-socials">
+        <a class="ft-social-pill" href="#">Instagram</a>
+        <a class="ft-social-pill" href="#">TikTok</a>
+        <a class="ft-social-pill" href="#">Twitter</a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h4>Our Food</h4>
+      <ul>
+        <li><a href="#flavors">Chicken &amp; Liver</a></li>
+        <li><a href="#flavors">Salmon &amp; Roe</a></li>
+        <li><a href="#flavors">Rabbit &amp; Marrow</a></li>
+        <li><a href="#flavors">Beef &amp; Kidney</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Pricing</h4>
+      <ul>
+        <li><a href="#pricing">Monthly — ﷼281</a></li>
+        <li><a href="#pricing">3 Months — ﷼750</a></li>
+        <li><a href="#pricing">6 Months — ﷼1,500</a></li>
+        <li><a href="#pricing">12 Months — ﷼3,000</a></li>
+        <li><a href="#" class="open-modal">Free Trial Box</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Vet Partners</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>&#xa9; 2025 Purley Pet Nutrition Inc. All rights reserved.</p>
+    <p style="color:#1e1e1e">Privacy &middot; Terms &middot; Accessibility</p>
+  </div>
+</footer>
+
+<script>
+/* ── INTRO ── */
+const intro = document.getElementById('intro');
+intro.classList.add('exit');
+intro.addEventListener('animationend', () => {
+  intro.classList.add('gone');
+  document.body.style.overflow = '';
+});
+document.body.style.overflow = 'hidden';
+setTimeout(() => { document.body.style.overflow = ''; intro.classList.add('gone'); }, 10000);
+
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+let mx=0,my=0,cx=-40,cy=-40;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function loop(){ cx+=(mx-cx)*.18; cy+=(my-cy)*.18; cur.style.left=cx+'px'; cur.style.top=cy+'px'; requestAnimationFrame(loop); })();
+document.addEventListener('mousedown', () => cur.classList.add('press'));
+document.addEventListener('mouseup',   () => cur.classList.remove('press'));
+document.querySelectorAll('a,button,.fcard,.q-opt,.why-card,.review-card,.pill,.plan').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+});
+
+/* ── MODAL ── */
+const modal = document.getElementById('modal');
+const openM  = () => { modal.classList.add('open'); document.body.style.overflow='hidden'; };
+const closeM = () => { modal.classList.remove('open'); document.body.style.overflow=''; };
+document.querySelectorAll('.open-modal').forEach(el => el.addEventListener('click', e => { e.preventDefault(); openM(); }));
+document.getElementById('modal-close-btn').addEventListener('click', closeM);
+modal.addEventListener('click', e => { if(e.target===modal) closeM(); });
+document.getElementById('m-submit').addEventListener('click', () => {
+  const name = document.getElementById('m-cat').value.trim() || 'your cat';
+  const btn = document.getElementById('m-submit');
+  btn.textContent = '✓ Trial box on its way for ' + name + '!';
+  btn.style.background = 'var(--limedim)';
+  setTimeout(closeM, 2000);
+});
+document.getElementById('cta-btn').addEventListener('click', () => openM());
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  const h = a.getAttribute('href');
+  if(h.length > 1 && !a.classList.contains('open-modal')) {
+    a.addEventListener('click', e => { e.preventDefault(); const t=document.querySelector(h); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
+  }
+});
+
+/* ── SCROLL REVEAL ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i*80); });
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── PILL ANIMATION ── */
+const po = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ document.querySelectorAll('.pill').forEach(p => { setTimeout(()=>p.classList.add('in'), parseInt(p.dataset.d)||0); }); po.disconnect(); }});
+}, {threshold:.2});
+const pw = document.getElementById('pill-wrap');
+if(pw) po.observe(pw);
+
+/* ── QUIZ ── */
+const ans = {};
+function setP(q){ document.getElementById('q-progress').style.display='flex'; for(let i=1;i<=5;i++){ const d=document.getElementById('d'+i); d.className='q-dot'+(i<q?' done':i===q?' active':''); } }
+function goTo(n){ document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('show')); document.getElementById('q-result').classList.remove('show'); const c=document.getElementById('q'+n); if(c){ c.classList.add('show'); setP(n); } }
+for(let q=1;q<=5;q++){
+  const card=document.getElementById('q'+q); if(!card) continue;
+  const opts=card.querySelectorAll('.q-opt');
+  const nxt=card.querySelector('.q-next');
+  opts.forEach(opt=>{ opt.addEventListener('click',()=>{ opts.forEach(o=>o.classList.remove('sel')); opt.classList.add('sel'); ans['q'+q]=opt.dataset.v; nxt.classList.add('ready'); }); });
+  nxt.addEventListener('click',()=>{ if(!nxt.classList.contains('ready')) return; if(q<5) goTo(q+1); else showR(); });
+}
+function showR(){
+  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('show'));
+  document.getElementById('q-progress').style.display='none';
+  const r=document.getElementById('q-result'); r.classList.add('show');
+  let name,emoji,desc,flavors;
+  const{q1,q2,q3,q5}=ans;
+  if(q3==='fish-allergy'){
+    name='RABBIT & MARROW';emoji='🐇';
+    flavors=['🐇 Rabbit & Marrow','🥩 Beef & Kidney'];
+    desc='With a fish allergy, Rabbit & Marrow is your safest and most complete choice — a hypoallergenic novel protein with collagen-rich marrow. Zero fish, guaranteed.';
+  } else if(q3==='chicken-allergy'||q2==='coat'){
+    name='SALMON & ROE';emoji='🐟';
+    flavors=['🐟 Salmon & Roe','🐇 Rabbit & Marrow'];
+    desc='Salmon & Roe is your omega-3 powerhouse. MSC-certified wild salmon with roe — nothing delivers coat shine and brain health like this.';
+  } else if(q2==='joints'||q1==='senior'){
+    name='RABBIT & MARROW';emoji='🐇';
+    flavors=['🐇 Rabbit & Marrow','🥩 Beef & Kidney'];
+    desc='Rabbit & Marrow is our top pick for senior cats and joint support — collagen-dense marrow with glucosamine-friendly organ mix. Gentle and deeply nourishing.';
+  } else if(q2==='digestion'||q4==='picky'){
+    name='CHICKEN & LIVER';emoji='🐓';
+    flavors=['🐓 Chicken & Liver','🥩 Beef & Kidney'];
+    desc='Chicken & Liver is our most beloved flavour — gentle on digestion, irresistibly aromatic for picky cats, and nutritionally complete with just four ingredients.';
+  } else {
+    name='BEEF & KIDNEY';emoji='🥩';
+    flavors=['🥩 Beef & Kidney','🐓 Chicken & Liver'];
+    desc='Beef & Kidney is our protein-packed powerhouse — grass-fed muscle meat, taurine-rich heart, and B12-dense kidney. For the healthy cat who just deserves the very best.';
+  }
+  const planLabel = {monthly:'Monthly at ﷼281/mo',quarterly:'3-Month plan at ﷼750',biannual:'6-Month plan at ﷼1,500 (save ﷼188)',annual:'Annual plan at ﷼3,000 (save ﷼375)'}[q5]||'Monthly at ﷼281/mo';
+  document.getElementById('r-name').textContent=name;
+  document.getElementById('r-emoji').textContent=emoji;
+  document.getElementById('r-desc').textContent=desc+' Recommended plan: '+planLabel+'.';
+  const rf=document.getElementById('r-flavors'); rf.innerHTML='';
+  flavors.forEach(f=>{ const s=document.createElement('span'); s.className='qr-flavor'; s.textContent=f; rf.appendChild(s); });
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+document.getElementById('quiz-restart').addEventListener('click',()=>{
+  Object.keys(ans).forEach(k=>delete ans[k]);
+  document.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('sel'));
+  document.querySelectorAll('.q-next').forEach(n=>n.classList.remove('ready'));
+  goTo(1);
+  document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
+});
+
+/* ── MOBILE TAP FOR INGREDIENT OVERLAY ── */
+if(window.matchMedia('(hover:none),(pointer:coarse)').matches){
+  document.querySelectorAll('.fcard').forEach(card => {
+    card.addEventListener('click', e => {
+      const isTapped = card.classList.contains('tapped');
+      document.querySelectorAll('.fcard').forEach(c => c.classList.remove('tapped'));
+      if(!isTapped) card.classList.add('tapped');
+    });
+  });
+}
+
+</script>
+</body>
+</html>
